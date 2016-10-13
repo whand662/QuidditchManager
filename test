@@ -1,0 +1,9 @@
+#!/bin/bash
+clear
+echo "Testing Quidditch Manager..."  
+if make; then
+./qman
+else
+echo "Failed to compile"
+fi
+echo "Finished testing!"  
