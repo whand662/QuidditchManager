@@ -20,10 +20,11 @@ class World{
 		World(string fileName);
 		int transaction();
 		void display();
-		void simWeek();
+		int simWeek();
 		
 	private:
 		
+		int week;
 		Team teams[LEAGUESIZE];
 		vector<Player> freeAgents;
 		int simGame(int homeTeam, int awayTeam);

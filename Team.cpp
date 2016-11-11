@@ -12,6 +12,10 @@ Team::Team(string teamName){
 	roster = Roster();
 }
 
+string Team::getName(){
+	return name;
+}
+
 void Team::display(){
 	printf("%s\n", name.c_str());
 	printf("Funds: %d\n", money);
@@ -30,7 +34,16 @@ Player Team::getPlayer(string position){
 	return roster.getPlayer(position);
 }
 
+Player Team::getPlayer(int position){
+	return roster.getPlayer(position);
+}
+
 int Team::getTeamScuffle(){
 	return roster.getTeamScuffle();
 }
+
+int Team::getOverall(){
+
+}
+
 

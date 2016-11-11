@@ -2,6 +2,7 @@
 
 World::World(){
 	initialize("Player Team");
+	week = 1;
 }
 
 World::World(string fileName){
@@ -18,12 +19,18 @@ void World::display(){
 	}
 }
 
-void World::simWeek(){
+int World::simWeek(){
 	//check that teams have valid rosters	
 	//play games
 	//update team money
 	//level players
 	//if new year check retirements
+	if(week == 52){
+		//new year things		
+		week == 1;
+	}else{
+		week++;
+	}
 }
 
 void World::initialize(string myTeam){
@@ -38,7 +45,7 @@ int World::simGame(int homeTeam, int awayTeam){
 	bool snitchCaught = false;
 	int quaffleHeld = -1;
 	int homeScore = 0, awayScore = 0;
-	int b1, b2;
+	int bl;
 	int timer = 0;
 	int sHome = 0, sAway = 0;
 	bool commentate = false;
@@ -50,9 +57,9 @@ int World::simGame(int homeTeam, int awayTeam){
 
 	//print pregame things here
 	if(commentate){
-		printf("\nThe %s OVR: %d\n", teams[homeTeam].getName(), teams[homeTeam].getOverall());
+		printf("\nThe %s OVR: %d\n", teams[homeTeam].getName().c_str(), teams[homeTeam].getOverall());
 		printf("VS\n");
-		printf("The %s OVR %d\n\n", teams[awayTeam].getName(), teams[awayTeam].getOverall());
+		printf("The %s OVR %d\n\n", teams[awayTeam].getName().c_str(), teams[awayTeam].getOverall());
 	}
 
 	while(!snitchCaught){
@@ -74,12 +81,20 @@ int World::simGame(int homeTeam, int awayTeam){
 			}
 		}
 
-		b1 = rand() % 40;
-		b2 = rand() % 50;
-		//deal with b1
-
-		//deal with b2
-
+		//bludger stuff
+		for(int i = 0; i <2; i++){
+			bl = rand() % 20;
+			if(bl <= 13){
+				if(bl > 6){
+					//away team
+					bl -= 7;
+					
+				}else{
+					//home team
+					
+				}
+			}
+		}
 		
 		if((rand() % 100) < teams[homeTeam].getPlayer("seeker").getSeek()){
 			sHome++;

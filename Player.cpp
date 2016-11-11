@@ -14,6 +14,10 @@ Player::Player(string n){
 	
 }
 
+string Player::getName(){
+	return name;
+}
+
 bool Player::isBlank(){
 	if(name.compare("Empty") == 0){
 		return true;

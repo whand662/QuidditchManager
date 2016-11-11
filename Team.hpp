@@ -19,6 +19,7 @@ class Team{
 		Player getPlayer(int position);
 		int getTeamScuffle();
 		int getOverall();
+		string getName();
 		
 	private:
 		string name;

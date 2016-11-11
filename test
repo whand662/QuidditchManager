@@ -5,5 +5,6 @@ if make; then
 ./qman
 else
 echo "Failed to compile"
+rm *.o
 fi
 echo "Finished testing!"  

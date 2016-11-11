@@ -25,6 +25,8 @@ class Player{
 		void display();
 		bool gainEXP(int exp);
 		bool isBlank();
+
+		string getName();
 		
 		//stat checkers
 		int getSeek();
