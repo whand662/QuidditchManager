@@ -148,3 +148,11 @@ int Roster::getTeamScuffle(){
 	return temp / 7;
 }
 
+string Roster::getSaveString(){
+  string temp = "";
+  for(int i = 0; i < 10; i++){
+    temp += roster[i].getSaveString();
+  }
+  return temp;
+}
+

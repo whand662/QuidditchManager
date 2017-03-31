@@ -52,3 +52,8 @@ void Stat::changeMod(int deltaMod, int deltaDur){
 	modDuration += deltaDur;
 }
 
+string Stat::getSaveString(){
+  string temp = name + " " + to_string(baseValue) + " " + to_string(modifier) + " " + to_string(modDuration) + "\n";
+  return temp;
+}
+

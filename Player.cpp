@@ -63,3 +63,10 @@ int Player::getPersonality(){
 	return stats[PERSONALITY].getActual();
 }
 
+string Player::getSaveString(){
+  string temp = name + " " + to_string(level) + " " + to_string(age) + " " + to_string(value) + " " + to_string(experience) + "\n";
+  for(int i = 0; i < 5; i++){
+    temp += stats[i].getSaveString();
+  }
+}
+

@@ -13,19 +13,18 @@ class Team{
 		Team();
 		Team(string teamName);
 		void display();
-		bool isPlayer();
 		bool isValid();
 		Player getPlayer(string position);
 		Player getPlayer(int position);
 		int getTeamScuffle();
 		int getOverall();
 		string getName();
+    string getSaveString();
 		
 	private:
 		string name;
 		int money = 0;
 		Roster roster;
-		bool humanControlled = false;
 };
 
 #endif

@@ -23,6 +23,7 @@ class Roster{
 		bool isValid();
 		int getTeamScuffle();
 		int getOverall();
+    string getSaveString();
 		
 	private:
 

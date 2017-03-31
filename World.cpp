@@ -1,12 +1,52 @@
 #include "World.hpp"
 
 World::World(){
+  numTeams = LEAGUESIZE;
+  teams.resize(numTeams);
 	initialize("Player Team");
 	week = 1;
 }
 
-World::World(string fileName){
-	//try to load from file, if not create new world and savefile
+World::World(string fileName, bool newGame){
+  printf("there0\n");  
+  ifstream saveFile;  
+  string temp;
+  saveName = fileName;
+  printf("there1\n");
+  if(newGame == true){
+    numTeams = LEAGUESIZE;
+    teams.resize(numTeams);
+	  week = 1;
+    printf("Enter a name for your team!\nQMAN: ");
+    cin >> temp;
+    initialize(temp);
+    printf("there2\n");
+  }else{
+    printf("there3\n");
+    saveFile.open("./save/" + saveName + ".txt");
+	  if(saveFile.is_open()){
+		
+    }
+    saveFile.close();
+  }
+}
+
+void World::saveGame(string fileName){
+  ofstream saveFile;  
+  if(fileName == "#"){
+    saveFile.open("./save/" + saveName + ".txt");
+  }else{
+    saveFile.open("./save/" + fileName + ".txt");
+  }
+	if(saveFile.is_open()){
+		saveFile << to_string(numTeams) + " " + to_string(week) + "\n"; 
+    for(int i = 0; i < numTeams; i++){
+      saveFile << teams[i].getSaveString();
+    }
+  }else{
+    printf("ERROR: could not open saveFile for writing\n"); 
+  }
+  saveFile.close();
 }
 
 int World::transaction(){
@@ -14,7 +54,7 @@ int World::transaction(){
 }
 
 void World::display(){
-	for(int i = 0; i < LEAGUESIZE; i++){
+	for(int i = 0; i < numTeams; i++){
 		teams[i].display();
 	}
 }
@@ -36,7 +76,7 @@ int World::simWeek(){
 void World::initialize(string myTeam){
 	ng = NameGen();
 	teams[0] = Team(myTeam);
-	for(int i = 1; i < LEAGUESIZE; i++){
+	for(int i = 1; i < numTeams; i++){
 		teams[i] = Team(ng.genTeam(true));
 	}
 }
@@ -51,7 +91,7 @@ int World::simGame(int homeTeam, int awayTeam){
 	bool commentate = false;
 	srand(time(NULL));
 
-	if(teams[homeTeam].isPlayer() || teams[awayTeam].isPlayer()){
+	if(homeTeam * awayTeam == 0){
 		commentate = true;
 	}
 

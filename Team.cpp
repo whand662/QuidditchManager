@@ -22,10 +22,6 @@ void Team::display(){
 	roster.display();
 }
 
-bool Team::isPlayer(){
-	return humanControlled;
-}
-
 bool Team::isValid(){
 	return roster.isValid();
 }
@@ -46,4 +42,9 @@ int Team::getOverall(){
 
 }
 
+string Team::getSaveString(){
+  string temp = name + " " + to_string(money) + "\n";
+  temp += roster.getSaveString();
+  return temp;
+}
 

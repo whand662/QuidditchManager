@@ -12,19 +12,14 @@ class Stat{
 
 	public:
 
-		Stat();
-		
+		Stat();	
 		Stat(string nm, int val);
-
 		Stat(string nm, int val, int mod, int mDur);
-
 		string getName();
-		
 		int getBase();
-
 		int getActual();
-
 		void changeMod(int deltaMod, int deltaDur);
+    string getSaveString();
 	
 	private:
 
