@@ -1,6 +1,7 @@
 #ifndef _WORLD
 #define _WORLD
 
+#include <limits.h>
 #include <stdio.h>
 #include "Team.hpp"
 #include "./nameGen/NameGen.hpp"

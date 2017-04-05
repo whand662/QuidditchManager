@@ -1,7 +1,11 @@
-all: main clean
+all: main teams clean
 
 main: Client.o World.o Team.o Roster.o Player.o Stat.o NameGen.o
 	g++ -std=c++11 Client.o World.o Team.o Roster.o Player.o Stat.o NameGen.o -o qman
+teams: testTeam.o Team.o Roster.o Player.o Stat.o
+	g++ -std=c++11 testTeam.o Team.o Roster.o Player.o Stat.o -o testteams
+testTeam.o: testTeam.cpp
+	g++ -c -std=c++11 testTeam.cpp
 Client.o: Client.cpp
 	g++ -c -std=c++11 Client.cpp
 World.o: World.cpp World.hpp

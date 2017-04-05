@@ -7,22 +7,20 @@ World::World(){
 	week = 1;
 }
 
-World::World(string fileName, bool newGame){
-  printf("there0\n");  
+World::World(string fileName, bool newGame){  
   ifstream saveFile;  
   string temp;
   saveName = fileName;
-  printf("there1\n");
   if(newGame == true){
     numTeams = LEAGUESIZE;
     teams.resize(numTeams);
 	  week = 1;
     printf("Enter a name for your team!\nQMAN: ");
-    cin >> temp;
+    cin.ignore(INT_MAX, '\n');
+    cin.clear();  
+    getline(cin, temp);
     initialize(temp);
-    printf("there2\n");
   }else{
-    printf("there3\n");
     saveFile.open("./save/" + saveName + ".txt");
 	  if(saveFile.is_open()){
 		
@@ -39,7 +37,7 @@ void World::saveGame(string fileName){
     saveFile.open("./save/" + fileName + ".txt");
   }
 	if(saveFile.is_open()){
-		saveFile << to_string(numTeams) + " " + to_string(week) + "\n"; 
+		saveFile << to_string(numTeams) + " " + to_string(week) + "\n";
     for(int i = 0; i < numTeams; i++){
       saveFile << teams[i].getSaveString();
     }
@@ -54,9 +52,13 @@ int World::transaction(){
 }
 
 void World::display(){
+  printf("\n");
+  printf("==============================");
+  printf("\n");
 	for(int i = 0; i < numTeams; i++){
 		teams[i].display();
 	}
+  printf("==============================");
 }
 
 int World::simWeek(){
