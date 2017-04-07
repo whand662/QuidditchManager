@@ -1,16 +1,18 @@
-#include "Roster.hpp"
+#include "RosterQ.hpp"
 
-Roster::Roster(){
+RosterQ::RosterQ(){
 	for(int i = 0; i <= 9; i++){
 		roster[i] = BLANK;
 	}
 }
 
-Roster::Roster(string fileName){
-	//blah do saving/loading things
+RosterQ::RosterQ(ifstream *inFile){
+	for(int i = 0; i < ROSTER_SIZE; i++){
+    roster[i] = Player(inFile);
+  }
 }
 
-int Roster::add(Player player, string position){
+int RosterQ::add(Player player, string position){
 	if(roster[pos2int(position)].isBlank()){	
 		roster[pos2int(position)] = player;
 		return 0;
@@ -20,7 +22,7 @@ int Roster::add(Player player, string position){
 	}
 }
 
-Player Roster::drop(string position){
+Player RosterQ::drop(string position){
 	if(roster[pos2int(position)].isBlank()){
 		printf("FAILURE: No player to drop: %s\n", position.c_str());
 		return BLANK;
@@ -30,14 +32,14 @@ Player Roster::drop(string position){
 	return temp;
 }
 
-int Roster::swap(string from, string to){
+int RosterQ::swap(string from, string to){
 	Player temp = roster[pos2int(to)];
 	roster[pos2int(to)] = roster[pos2int(from)];
 	roster[pos2int(from)] = temp;
 	return 0;
 }
 
-int Roster::move(string from, string to){
+int RosterQ::move(string from, string to){
 	if(roster[pos2int(to)].isBlank()){
 		roster[pos2int(to)] = roster[pos2int(from)];
 		roster[pos2int(from)] = BLANK;
@@ -48,15 +50,15 @@ int Roster::move(string from, string to){
 	}
 }
 
-Player Roster::getPlayer(string position){
+Player RosterQ::getPlayer(string position){
 	return roster[pos2int(position)];
 }
 
-Player Roster::getPlayer(int position){
+Player RosterQ::getPlayer(int position){
 	return roster[position];
 }
 
-bool Roster::isValid(){
+bool RosterQ::isValid(){
 	for(int i = 0; i <= 6; i++){
 		if(roster[i].isBlank()){
 			printf("FAILURE: Unfilled position: %s\n", int2pos(i).c_str());
@@ -68,7 +70,7 @@ bool Roster::isValid(){
 	return true;
 }
 
-int Roster::pos2int(string pos){
+int RosterQ::pos2int(string pos){
 	transform(pos.begin(), pos.end(), pos.begin(), ::tolower);
 
 	if(!pos.compare("seeker")){
@@ -99,7 +101,7 @@ int Roster::pos2int(string pos){
 	}
 }
 
-string Roster::int2pos(int pos){
+string RosterQ::int2pos(int pos){
 	switch(pos){
 		case 0:
 			return "Seeker";
@@ -126,21 +128,21 @@ string Roster::int2pos(int pos){
 	}
 }
 
-void Roster::display(){
+void RosterQ::display(){
+  printf("POSITION     NAME    AGE STR SPD RCT INT PER\n");
 	for(int i = 0; i <= 9; i++){
 		printf("%s", int2pos(i).c_str());
 		printf(": ");
 		if(getPlayer(i).isBlank()){
-			printf("Empty");
+			printf("Empty\n");
 		}else{
 			getPlayer(i).display();
 		}
-		printf("\n");
 	}
 	printf("\n");
 }
 
-int Roster::getTeamScuffle(){
+int RosterQ::getTeamScuffle(){
 	int temp = 0;
 	for(int i = 0; i < 7; i++){
 		temp += roster[i].getScuffle();
@@ -148,11 +150,15 @@ int Roster::getTeamScuffle(){
 	return temp / 7;
 }
 
-string Roster::getSaveString(){
+string RosterQ::getSaveString(){
   string temp = "";
   for(int i = 0; i < 10; i++){
     temp += roster[i].getSaveString();
   }
   return temp;
+}
+
+void RosterQ::tick(){
+
 }
 

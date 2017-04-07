@@ -1,15 +1,22 @@
 #include "Team.hpp"
 
 Team::Team(){
-	name = "I didn't name my team!";
+	name = "Default constructor teamname!";
 	money = 5000;
-	roster = Roster();
+	roster = RosterQ();
 }
 
 Team::Team(string teamName){
 	name = teamName;
 	money = 5000;
-	roster = Roster();
+	roster = RosterQ();
+}
+
+Team::Team(ifstream *inFile){ 
+  inFile->ignore(INT_MAX, '\n');
+  getline(*inFile, name);
+  *inFile >> money;
+  roster = RosterQ(inFile);
 }
 
 string Team::getName(){
@@ -43,8 +50,12 @@ int Team::getOverall(){
 }
 
 string Team::getSaveString(){
-  string temp = name + " " + to_string(money) + "\n";
+  string temp = name + "\n" + to_string(money) + "\n";
   temp += roster.getSaveString();
   return temp;
+}
+
+void Team::tick(){
+
 }
 

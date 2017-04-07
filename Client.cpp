@@ -16,7 +16,15 @@ void logo(){
 }
 
 void printHelp(){
-  printf("Not much to help you with yet!\n");
+  printf("COMMANDS\n");
+  printf("  help\n");
+  printf("    -shows this menu\n");
+  printf("  quit\n");
+  printf("    -saves and exits\n");
+  printf("  save\n");
+  printf("    -just saves the game\n");
+  printf("  display\n");
+  printf("    -prints the roster for every team\n");
 }
 
 int checkValidCommand(string input){

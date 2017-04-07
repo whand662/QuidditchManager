@@ -4,3 +4,7 @@
 *.exe
 *.o
 *.so
+save/*.txt
+qman
+testTeam.cpp
+testteams

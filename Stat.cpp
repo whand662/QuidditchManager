@@ -37,6 +37,10 @@ int Stat::getBase(){
 	return baseValue;
 }
 
+void Stat::setBase(int val){
+	baseValue = val;
+}
+
 int Stat::getActual(){
 	int temp = baseValue + modifier;
 	if(temp > STATMAX){
@@ -47,13 +51,29 @@ int Stat::getActual(){
 	return temp;
 }
 
+string Stat::display(){
+  if(modifier == 0){
+    return to_string(baseValue);
+  }else{
+    if(modifier > 0){
+      return to_string(baseValue) + "+" + to_string(modifier);
+    }else{
+      return to_string(baseValue) + to_string(modifier);
+    }
+  }
+}
+
 void Stat::changeMod(int deltaMod, int deltaDur){
 	modifier += deltaMod;
 	modDuration += deltaDur;
 }
 
 string Stat::getSaveString(){
-  string temp = name + " " + to_string(baseValue) + " " + to_string(modifier) + " " + to_string(modDuration) + "\n";
+  string temp = to_string(baseValue) + " " + to_string(modifier) + " " + to_string(modDuration) + "\n";
   return temp;
+}
+
+void Stat::tick(){
+
 }
 

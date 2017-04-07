@@ -2,8 +2,11 @@
 #define _TEAM
 
 #include <stdio.h>
-#include "Roster.hpp"
+#include "RosterQ.hpp"
 #include <string>
+#include <iostream>
+#include <fstream>
+#include <limits.h>
 
 using namespace std;
 
@@ -12,6 +15,7 @@ class Team{
 		
 		Team();
 		Team(string teamName);
+    Team(ifstream *inFile);
 		void display();
 		bool isValid();
 		Player getPlayer(string position);
@@ -20,11 +24,12 @@ class Team{
 		int getOverall();
 		string getName();
     string getSaveString();
+    void tick();
 		
 	private:
 		string name;
 		int money = 0;
-		Roster roster;
+		RosterQ roster;
 };
 
 #endif

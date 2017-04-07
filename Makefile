@@ -1,9 +1,9 @@
 all: main teams clean
 
-main: Client.o World.o Team.o Roster.o Player.o Stat.o NameGen.o
-	g++ -std=c++11 Client.o World.o Team.o Roster.o Player.o Stat.o NameGen.o -o qman
-teams: testTeam.o Team.o Roster.o Player.o Stat.o
-	g++ -std=c++11 testTeam.o Team.o Roster.o Player.o Stat.o -o testteams
+main: Client.o World.o Team.o RosterQ.o Player.o Stat.o NameGen.o
+	g++ -std=c++11 Client.o World.o Team.o RosterQ.o Player.o Stat.o NameGen.o -o qman
+teams: testTeam.o Team.o RosterQ.o Player.o Stat.o
+	g++ -std=c++11 testTeam.o Team.o RosterQ.o Player.o Stat.o -o testteams
 testTeam.o: testTeam.cpp
 	g++ -c -std=c++11 testTeam.cpp
 Client.o: Client.cpp
@@ -12,8 +12,8 @@ World.o: World.cpp World.hpp
 	g++ -c -std=c++11 World.cpp
 Team.o: Team.cpp Team.hpp
 	g++ -c -std=c++11 Team.cpp
-Roster.o: Roster.cpp Roster.hpp
-	g++ -c -std=c++11 Roster.cpp
+RosterQ.o: RosterQ.cpp RosterQ.hpp
+	g++ -c -std=c++11 RosterQ.cpp
 Player.o: Player.cpp Player.hpp
 	g++ -c -std=c++11 Player.cpp
 NameGen.o: ./nameGen/NameGen.cpp ./nameGen/NameGen.hpp

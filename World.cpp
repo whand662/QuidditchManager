@@ -8,7 +8,7 @@ World::World(){
 }
 
 World::World(string fileName, bool newGame){  
-  ifstream saveFile;  
+  ifstream inFile;  
   string temp;
   saveName = fileName;
   if(newGame == true){
@@ -21,11 +21,16 @@ World::World(string fileName, bool newGame){
     getline(cin, temp);
     initialize(temp);
   }else{
-    saveFile.open("./save/" + saveName + ".txt");
-	  if(saveFile.is_open()){
-		
+    inFile.open("./save/" + saveName + ".txt");
+	  if(inFile.is_open()){
+		  inFile >> numTeams;
+      inFile >> week;
+      teams.resize(numTeams);
+      for(int i = 0; i < numTeams; i++){
+        teams[i] = Team(&inFile);
+      }
     }
-    saveFile.close();
+    inFile.close();
   }
 }
 
@@ -62,10 +67,18 @@ void World::display(){
 }
 
 int World::simWeek(){
-	//check that teams have valid rosters	
+	//check that teams have valid rosters
+  for(int i = 0; i < numTeams; i++){
+    if(!teams[i].isValid()){
+      return i;
+    }
+  }
 	//play games
 	//update team money
 	//level players
+  for(int i = 0; i < numTeams; i++){
+    teams[i].tick();
+  }
 	//if new year check retirements
 	if(week == 52){
 		//new year things		
@@ -73,6 +86,7 @@ int World::simWeek(){
 	}else{
 		week++;
 	}
+  return -1;
 }
 
 void World::initialize(string myTeam){
