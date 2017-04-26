@@ -5,6 +5,12 @@
 #include <fstream>
 #include <boost/algorithm/string/predicate.hpp>
 
+#define INVALID_COMMAND -1
+#define SAVE_COMMAND -2
+#define QUIT_COMMAND -3
+#define HELP_COMMAND -4
+#define SIMWEEK_COMMAND -5
+
 using namespace std;
 
 void logo(){
@@ -30,20 +36,23 @@ void printHelp(){
 int checkValidCommand(string input){
   //special client commands  
   if(boost::iequals(input, "help")){
-    return -1;
+    return HELP_COMMAND;
   }
   if(boost::iequals(input, "exit") || boost::iequals(input, "quit")){
-    return -2;
+    return QUIT_COMMAND;
   }
   if(boost::iequals(input, "save")){
-    return -3;
+    return SAVE_COMMAND;
+  }
+  if(boost::iequals(input, "simweek")){
+    return SIMWEEK_COMMAND;
   }
   //world commands
   if(boost::iequals(input, "display")){
     return 0;
   }
   //catch-all return -4 means input was not matched to a valid command
-  return -4;
+  return INVALID_COMMAND;
 }
 
 int main(){
@@ -82,6 +91,7 @@ int main(){
   printf("type 'help' for list of commands\n");
 
   //begin client loop	
+  int temp; // for misc uses
   while(!done){
     printf("QMAN: ");
     cin >> input;
@@ -91,27 +101,30 @@ int main(){
 
       Anything >= 0 is the number of additional arguments needed
       This implies a valid command
-
-      -2 is reserved for exit command, will change done to true
-
-      -1 will be valid and signify help was entered
-
-      -3 for save      
-
-      -4 is invalid
+      
+      Negative values are defined above and will be special client-
+      handled commands
     */
     handler = checkValidCommand(input);
-    if(handler == -4){
+    if(handler == INVALID_COMMAND){
       cout << "Invalid Command: " << input << "\n";
-    }else if(handler == -2){
+    }else if(handler == QUIT_COMMAND){
       cout << "Saving and exiting...\n";
       world->saveGame("#");
       done = true;
-    }else if(handler == -1){
+    }else if(handler == HELP_COMMAND){
       printHelp();
-    }else if(handler == -3){
+    }else if(handler == SAVE_COMMAND){
       cout << "Saving...\n";
       world->saveGame("#");
+    }else if(handler == SIMWEEK_COMMAND){
+      cout << "Advancing week...\n";
+      temp = world->simWeek();
+      if(temp >= 0){
+        cout << "Your team is invalid! Fix it and try again!\n";
+      }else{
+        cout << "Successfully advanced\n";
+      }
     }else{
       //gather arguments and pass to world
       world->display();

@@ -9,7 +9,7 @@ Team::Team(){
 Team::Team(string teamName){
 	name = teamName;
 	money = 5000;
-	roster = RosterQ();
+	roster = RosterQ(true);
 }
 
 Team::Team(ifstream *inFile){ 

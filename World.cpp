@@ -3,6 +3,7 @@
 World::World(){
   numTeams = LEAGUESIZE;
   teams.resize(numTeams);
+  ts = TeamScheduler(numTeams, 1000000);
 	initialize("Player Team");
 	week = 1;
 }
@@ -17,7 +18,7 @@ World::World(string fileName, bool newGame){
 	  week = 1;
     printf("Enter a name for your team!\nQMAN: ");
     cin.ignore(INT_MAX, '\n');
-    cin.clear();  
+    cin.clear();
     getline(cin, temp);
     initialize(temp);
   }else{
@@ -32,6 +33,7 @@ World::World(string fileName, bool newGame){
     }
     inFile.close();
   }
+  ts = TeamScheduler(numTeams, 1000000);
 }
 
 void World::saveGame(string fileName){
@@ -67,25 +69,37 @@ void World::display(){
 }
 
 int World::simWeek(){
+  //AI teams make rosters valid
+    
+
 	//check that teams have valid rosters
   for(int i = 0; i < numTeams; i++){
     if(!teams[i].isValid()){
       return i;
     }
   }
+
 	//play games
-	//update team money
-	//level players
+  vector<Match> weekly = ts.getWeek(week);
+  for(unsigned int i = 0; i < weekly.size(); i++){
+    if(week % 2 == 0){    
+      simGame(weekly[i].team1, weekly[i].team2);
+    }else{
+      simGame(weekly[i].team2, weekly[i].team1);
+    }
+  }
+
+	//update team money & level players
   for(int i = 0; i < numTeams; i++){
     teams[i].tick();
   }
+
 	//if new year check retirements
-	if(week == 52){
+	if(week % 52 == 0){
 		//new year things		
-		week == 1;
-	}else{
-		week++;
+		
 	}
+  week++;
   return -1;
 }
 

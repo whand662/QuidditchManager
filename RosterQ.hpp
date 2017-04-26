@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <iostream>
 #include <fstream>
+#include "./nameGen/NameGen.hpp"
 
 #define ROSTER_SIZE 10
 
@@ -16,6 +17,7 @@ class RosterQ{
 	public:
 		
 		RosterQ();
+    RosterQ(bool autofill);
 		RosterQ(ifstream *inFile);
 		int add(Player player, string position);
 		Player drop(string position);

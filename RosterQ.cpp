@@ -6,6 +6,19 @@ RosterQ::RosterQ(){
 	}
 }
 
+RosterQ::RosterQ(bool autofill){
+  NameGen ng = NameGen();
+  if(autofill){
+    for(int i = 0; i <= 9; i++){
+		  roster[i] = Player(ng.genFull());
+	  }
+  }else{
+    for(int i = 0; i <= 9; i++){
+		  roster[i] = BLANK;
+	  }
+  }
+}
+
 RosterQ::RosterQ(ifstream *inFile){
 	for(int i = 0; i < ROSTER_SIZE; i++){
     roster[i] = Player(inFile);
