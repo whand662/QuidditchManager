@@ -9,8 +9,11 @@ RosterQ::RosterQ(){
 RosterQ::RosterQ(bool autofill){
   NameGen ng = NameGen();
   if(autofill){
-    for(int i = 0; i <= 9; i++){
+    for(int i = 0; i <= 6; i++){
 		  roster[i] = Player(ng.genFull());
+	  }
+    for(int i = 7; i <= 9; i++){
+		  roster[i] = BLANK;
 	  }
   }else{
     for(int i = 0; i <= 9; i++){

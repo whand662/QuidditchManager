@@ -4,12 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <boost/algorithm/string/predicate.hpp>
-
-#define INVALID_COMMAND -1
-#define SAVE_COMMAND -2
-#define QUIT_COMMAND -3
-#define HELP_COMMAND -4
-#define SIMWEEK_COMMAND -5
+#include "./StringTokenizer/StringTokenizer.hpp"
 
 using namespace std;
 
@@ -33,35 +28,13 @@ void printHelp(){
   printf("    -prints the roster for every team\n");
 }
 
-int checkValidCommand(string input){
-  //special client commands  
-  if(boost::iequals(input, "help")){
-    return HELP_COMMAND;
-  }
-  if(boost::iequals(input, "exit") || boost::iequals(input, "quit")){
-    return QUIT_COMMAND;
-  }
-  if(boost::iequals(input, "save")){
-    return SAVE_COMMAND;
-  }
-  if(boost::iequals(input, "simweek")){
-    return SIMWEEK_COMMAND;
-  }
-  //world commands
-  if(boost::iequals(input, "display")){
-    return 0;
-  }
-  //catch-all return -4 means input was not matched to a valid command
-  return INVALID_COMMAND;
-}
-
 int main(){
 	srand(time(NULL));
 	string saveName, input;
   bool done = false;
   bool loadLoop = true;
-  int handler;
 	World *world;
+  StringTokenizer ST;
   logo();
 	
   //begin loading loop
@@ -91,44 +64,38 @@ int main(){
   printf("type 'help' for list of commands\n");
 
   //begin client loop	
-  int temp; // for misc uses
+  vector<string> temp;
+  int tempInt;
+  cin.ignore(INT_MAX, '\n');
+  cin.clear();
   while(!done){
     printf("QMAN: ");
-    cin >> input;
-    /*
-      HANDLER CODES
-      returned from checkValidCommand function
+    
+    getline(cin, input);
+    temp = ST.tokenize(input);
 
-      Anything >= 0 is the number of additional arguments needed
-      This implies a valid command
-      
-      Negative values are defined above and will be special client-
-      handled commands
-    */
-    handler = checkValidCommand(input);
-    if(handler == INVALID_COMMAND){
-      cout << "Invalid Command: " << input << "\n";
-    }else if(handler == QUIT_COMMAND){
+    if(boost::iequals(temp[0], "help")){
+      printHelp();
+    }else if(boost::iequals(temp[0], "exit") || boost::iequals(temp[0], "quit")){
       cout << "Saving and exiting...\n";
       world->saveGame("#");
       done = true;
-    }else if(handler == HELP_COMMAND){
-      printHelp();
-    }else if(handler == SAVE_COMMAND){
+    }else if(boost::iequals(temp[0], "save")){
       cout << "Saving...\n";
       world->saveGame("#");
-    }else if(handler == SIMWEEK_COMMAND){
+      cout << "Saved!\n";
+    }else if(boost::iequals(temp[0], "simweek")){
       cout << "Advancing week...\n";
-      temp = world->simWeek();
-      if(temp >= 0){
+      tempInt = world->simWeek();
+      if(tempInt >= 0){
         cout << "Your team is invalid! Fix it and try again!\n";
       }else{
         cout << "Successfully advanced\n";
       }
-    }else{
-      //gather arguments and pass to world
+    }else if(boost::iequals(temp[0], "display")){
       world->display();
     }
+
     cout << "\n";
   }
   //end client loop

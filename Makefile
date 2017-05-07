@@ -1,7 +1,7 @@
 all: main teams clean
 
-main: Client.o World.o Team.o RosterQ.o Player.o Stat.o NameGen.o TeamScheduler.o
-	g++ -std=c++11 Client.o World.o Team.o RosterQ.o Player.o Stat.o NameGen.o TeamScheduler.o -o qman
+main: Client.o World.o Team.o RosterQ.o Player.o Stat.o NameGen.o TeamScheduler.o StringTokenizer.o
+	g++ -std=c++11 Client.o World.o Team.o RosterQ.o Player.o Stat.o NameGen.o TeamScheduler.o StringTokenizer.o -o qman
 teams: testTeam.o Team.o RosterQ.o Player.o Stat.o NameGen.o
 	g++ -std=c++11 testTeam.o Team.o RosterQ.o Player.o Stat.o NameGen.o -o testteams
 testTeam.o: testTeam.cpp
@@ -20,6 +20,8 @@ NameGen.o: ./nameGen/NameGen.cpp ./nameGen/NameGen.hpp
 	g++ -c -std=c++11 ./nameGen/NameGen.cpp
 TeamScheduler.o: ./TeamScheduler/TeamScheduler.cpp ./TeamScheduler/TeamScheduler.hpp
 	g++ -c -std=c++11 ./TeamScheduler/TeamScheduler.cpp
+StringTokenizer.o: ./StringTokenizer/StringTokenizer.cpp ./StringTokenizer/StringTokenizer.hpp
+	g++ -c -std=c++11 ./StringTokenizer/StringTokenizer.cpp
 Stat.o: Stat.cpp Stat.hpp
 	g++ -c -std=c++11 Stat.cpp
 clean:
