@@ -3,6 +3,9 @@
 
 #include <vector>
 #include <stdio.h>
+#include <string>
+
+#define BYE_WEEK -777
 
 using namespace std;
 
@@ -31,6 +34,7 @@ class TeamScheduler{
     vector<vector<Match> > calender;
 		void shuffle();
     void generate();
+    string pID(int id);
 		
 };
 
